@@ -1,0 +1,16 @@
+Metadata-Version: 2.4
+Name: libero
+Version: 0.1.0
+Summary: LIBERO-plus: In-Depth Robustness Analysis For Vision-Language-Action Models
+Author: Anonymous
+Author-email: Anonymous
+Requires-Python: >=3
+Description-Content-Type: text/markdown
+Dynamic: author
+Dynamic: author-email
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: requires-python
+Dynamic: summary
+
+LIBERO-plus
