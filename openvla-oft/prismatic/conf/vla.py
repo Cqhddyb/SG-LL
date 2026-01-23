@@ -26,9 +26,6 @@ class VLAConfig(ChoiceRegistry):
     freeze_llm_backbone: bool                       # Freeze LLM Backbone parameters
     unfreeze_last_llm_layer: bool                   # Unfreeze final layer of LLM (only takes effect if LLM is frozen)
 
-    # ===== 新增：训练阶段扰动开关 =====
-    use_perturbation_in_train: bool = False         # 训练阶段扰动开关（全局开时生效）
-    # =================================
     
     # Data Mixture Parameters
     data_mix: str                                   # Open-X Embodiment Dataset =>> Unique Mixture ID (e.g., `bridge`)
@@ -59,6 +56,9 @@ class VLAConfig(ChoiceRegistry):
     reduce_in_full_precision: bool = True           # Accumulate/Reduce All-Gather Gradients in FP32 Full Precision
 
     # fmt: on
+    # ===== 新增：训练阶段扰动开关 =====
+    use_perturbation_in_train: bool = False         # 训练阶段扰动开关（全局开时生效）
+    # =================================
 
 
 # === OpenVLA Training Configurations ===

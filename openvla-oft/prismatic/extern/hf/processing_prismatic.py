@@ -167,25 +167,25 @@ class PrismaticImageProcessor(ImageProcessingMixin):
         return img
 
         def apply_transform(self, img: Image.Image) -> torch.Tensor:
-        """Apply `functional` variant of TIMM's Transform"""
-        # ===== 新增：调用扰动函数 =====
-        img = self.add_perturbation(img)
-        # =============================
+            """Apply `functional` variant of TIMM's Transform"""
+            # ===== 新增：调用扰动函数 =====
+            img = self.add_perturbation(img)
+            # =============================
 
-        if self.tvf_do_letterbox:
-            img = letterbox_pad_transform(img, self.tvf_letterbox_fill)
+            if self.tvf_do_letterbox:
+                img = letterbox_pad_transform(img, self.tvf_letterbox_fill)
 
-        # 原有resize/crop/归一化逻辑（保留）
-        imgs_t = []
-        for idx in range(len(self.input_sizes)):
-            img_idx = TVF.resize(img, **self.tvf_resize_params[idx])
-            img_idx = TVF.center_crop(img_idx, **self.tvf_crop_params[idx])
-            img_idx_t = TVF.to_tensor(img_idx)
-            img_idx_t = TVF.normalize(img_idx_t, **self.tvf_normalize_params[idx])
-            imgs_t.append(img_idx_t)
+            # 原有resize/crop/归一化逻辑（保留）
+            imgs_t = []
+            for idx in range(len(self.input_sizes)):
+                img_idx = TVF.resize(img, **self.tvf_resize_params[idx])
+                img_idx = TVF.center_crop(img_idx, **self.tvf_crop_params[idx])
+                img_idx_t = TVF.to_tensor(img_idx)
+                img_idx_t = TVF.normalize(img_idx_t, **self.tvf_normalize_params[idx])
+                imgs_t.append(img_idx_t)
 
-        img_t = torch.vstack(imgs_t)
-        return img_t
+            img_t = torch.vstack(imgs_t)
+            return img_t
 
     # def apply_transform(self, img: Image.Image) -> torch.Tensor:
     #     """Apply `functional` variant of TIMM's Transform = Compose([Resize -> CenterCrop -> ToTensor -> Normalize])"""

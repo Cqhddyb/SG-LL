@@ -12,7 +12,7 @@ variant thereof. A given model variant configures the following attributes:
 from dataclasses import dataclass
 from enum import Enum, unique
 from typing import Optional
-
+from typing import Tuple
 from draccus import ChoiceRegistry
 
 
@@ -30,12 +30,6 @@ class ModelConfig(ChoiceRegistry):
     image_resize_strategy: str                              # Resizing strategy in < crop | letterbox | corner-pad >
     llm_max_length: int                                     # Maximum context length for LLM (can be < than max!)
 
-     # ===== 新增：全局图片扰动配置 =====
-    use_image_perturbation: bool = True                    # 全局扰动总开关（关闭则所有阶段都不加）
-    perturbation_blur_radius_range: Tuple[float, float] = (0.5, 3.0)  # 高斯模糊半径范围
-    perturbation_noise_ratio: float = 0.05                 # 椒盐噪声占比
-    perturbation_brightness_range: Tuple[float, float] = (0.5, 1.5)  # 亮度扰动范围
-    # =================================
 
     # === Multi-Stage Optimization Hyperparameters ===
     # By default, we assume an AdamW optimizer with FSDP (Gradient Sharding or Full Sharding depending on stage)
@@ -73,10 +67,16 @@ class ModelConfig(ChoiceRegistry):
     # Enable Gradient/Activation Checkpointing (for the LLM Backbone)
     enable_gradient_checkpointing: bool = True
 
+
     # Enable Traditional Mixed Precision Training via Torch Native AMP (`autocast`)
     enable_mixed_precision_training: bool = True            # Whether to enable mixed precision training
     reduce_in_full_precision: bool = False                  # Whether to run gradient reduction in FP32
-
+     # ===== 新增：全局图片扰动配置 =====
+    use_image_perturbation: bool = True                    # 全局扰动总开关（关闭则所有阶段都不加）
+    perturbation_blur_radius_range: tuple[float, float] = (0.5, 3.0)  # 高斯模糊半径范围
+    perturbation_noise_ratio: float = 0.05                 # 椒盐噪声占比
+    perturbation_brightness_range: tuple[float, float] = (0.5, 1.5)  # 亮度扰动范围
+    # =================================
     # fmt: on
 
 
